@@ -1,0 +1,13 @@
+#container.container
+  nav.navbar.navbar-default role="navigation"
+    .container-fluid
+      .navbar-header
+        link-to "index" class="navbar-brand"
+          | Full Stack
+      .collapse.navbar-collapse
+        ul.nav.navbar-nav
+          li 
+            link-to "posts"
+              | Posts
+
+  outlet

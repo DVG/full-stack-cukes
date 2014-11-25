@@ -15,7 +15,7 @@ class ApplicationManager
   attr_accessor :rails, :ember, :rails_log, :ember_log
 
   def initialize
-    @rails = ChildProcess.build("sh", "-c", "BUNDLE_GEMFILE=Gemfile bundle exec rails s")
+    @rails = ChildProcess.build("sh", "-c", "BUNDLE_GEMFILE=Gemfile bundle exec rails s -e test")
     @rails.leader = true
     @rails.cwd = RailsRoot
     @rails_log = @rails.io.stdout = @rails.io.stderr = Tempfile.new('rails-log')

@@ -3,10 +3,13 @@ Given(/^a post exists titled "(.*?)"$/) do |title|
 end
 
 When(/^I visit the list of psots$/) do
-  pending # express the regexp above with the code you wish you had
+  visit PostsIndex
 end
 
-Then(/^I should see a post titled "(.*?)"$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
+Then(/^I should see a post titled "(.*?)"$/) do |title|
+  on PostsIndex do |page|
+    page.wait_for_ajax
+    expect(page.text).to include title
+  end
 end
 

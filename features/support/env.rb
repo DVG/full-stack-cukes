@@ -24,35 +24,9 @@ else
   raise "Please create #{database_yml} first to configure your test database"
 end
 
-api = ChildProcess.build("rails", "s", "-e", "test")
-api_log = api.io.stdout = Tempfile.new('api-log')
-api.cwd =  RailsRoot
-front_end = ChildProcess.build("ember", "serve", "--proxy", "http://localhost:3000")
-front_end_log = front_end.io.stdout = Tempfile.new('front-end-log')
-front_end.cwd = EmberRoot
-
-
-api.start
-front_end.start
-# Let the processes start up
-begin
-  Timeout.timeout(15) do # Depending on your Project Size and how long booting your server takes, you may adjust this timeout
-    processes_started = false
-    while !processes_started
-      sleep 1
-      if open(api_log).read.include?("WEBrick::HTTPServer#start: pid=") && open(front_end_log).read.include?("Build successful")
-        processes_started = true
-      end
-    end
-  end
-rescue Timeout::Error => e
-  api.stop
-  front_end.stop
-  until api.exited? && front_end.exited?
-    sleep 1
-  end
-end
-
-
+require_relative './application_manager'
+manager = ApplicationManager.new
+manager.start_stack
 at_exit do
+  manager.stop_stack
 end

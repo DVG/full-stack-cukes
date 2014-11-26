@@ -10,19 +10,17 @@ end
 
 class ApplicationManager
   require 'childprocess'
-
-  @@processes_started = false
   attr_accessor :rails, :ember, :rails_log, :ember_log
 
   def initialize
     @rails = ChildProcess.build("sh", "-c", "BUNDLE_GEMFILE=Gemfile bundle exec rails s -e test")
     @rails.leader = true
-    @rails.cwd = RailsRoot
+    @rails.cwd = Cukes.config.rails_root
     @rails_log = @rails.io.stdout = @rails.io.stderr = Tempfile.new('rails-log')
 
     @ember = ChildProcess.build("ember", "serve", "--proxy", "http://localhost:3000")
     @ember.leader = true
-    @ember.cwd = EmberRoot
+    @ember.cwd = Cukes.config.ember_root
     @ember_log = @ember.io.stdout = @ember.io.stderr = Tempfile.new("ember-log")
   end
 
@@ -31,13 +29,15 @@ class ApplicationManager
     rails.start
     ember.start
     wait_for_processes_started
-    puts "Applications Online"
+    puts "Applications Online - Happy Cuking"
   end
 
   def stop_stack
+    puts "Stopping the Applications, hang on"
     rails.interrupt
     ember.interrupt
     wait_for_processes_to_exit
+    puts "All done! Hope they're all passes (::) (::) (::)"
   end
 
 
@@ -59,7 +59,7 @@ private
   end
 
   def wait_for_processes_to_exit
-    begin 
+    begin
       Timeout::timeout(5) do
         loop { break if rails.exited? && ember.exited? }
       end

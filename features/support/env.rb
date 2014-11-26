@@ -5,20 +5,17 @@ require 'database_cleaner'
 require 'active_support/dependencies'
 require 'page-object'
 require 'page-object/page_factory'
-
+require_relative './cukes'
 require_relative './application_manager'
 
-CukesRoot = Dir[File.dirname(File.expand_path('../../', __FILE__))].first
-RailsRoot = File.join(CukesRoot, "backend")
-EmberRoot = File.join(CukesRoot, "frontend")
-
 # Require Models
-ActiveSupport::Dependencies.autoload_paths += Dir.glob File.join(RailsRoot, "app/models")
+ActiveSupport::Dependencies.autoload_paths += Dir.glob File.join(Cukes.config.rails_root, "app/models")
 
 # Require Factories
-Dir["#{RailsRoot}/spec/factories/*.rb"].each { |f| require f }
+Dir["#{Cukes.config.rails_root}/spec/factories/*.rb"].each { |f| require f }
 
 # Connect to Test Database, suggest simply symlinking your actual database.yml from backend to config/database.yml in this project
+# If you are using sqlite, you'll need a separate database.yml for this project with the relative path to the backend test.sqlite file
 database_yml = File.expand_path('../../../config/database.yml', __FILE__)
 if File.exists?(database_yml)
   active_record_configuration = YAML.load_file(database_yml)
@@ -36,7 +33,6 @@ at_exit do
   manager.stop_stack
 end
 
-
 # Database Cleaner to clear out the test DB between tests
 require 'database_cleaner/cucumber'
 DatabaseCleaner.strategy = :truncation
@@ -47,4 +43,6 @@ end
 # Page Object Stuff
 PageObject.javascript_framework = :jquery # Ember uses Jquery Under the hood
 World(PageObject::PageFactory)
-AppHost = "http://localhost:4200"
+
+# Shorthand FactoryGirl
+include FactoryGirl::Syntax::Methods

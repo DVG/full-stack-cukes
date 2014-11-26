@@ -1,5 +1,5 @@
 Given(/^a post exists titled "(.*?)"$/) do |title|
-  FactoryGirl.create(:post, title: title)
+  create(:post, title: title)
 end
 
 When(/^I visit the list of psots$/) do

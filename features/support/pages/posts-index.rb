@@ -1,6 +1,6 @@
 class PostsIndex
   include PageObject
-  page_url "#{AppHost}/posts"
+  page_url "#{Cukes.config.host}/posts"
 
   def post_titles
     browser.h2s(class: "title").map(&:text)

@@ -1,0 +1,3 @@
+default: --tags ~@buggy
+firefox: BROWSER=firefox
+chromedriver: BROWSER=chrome

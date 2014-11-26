@@ -1,6 +1,6 @@
 class PostsNew
   include PageObject
-  page_url "#{AppHost}/posts/new"
+  page_url "#{Cukes.config.host}/posts/new"
 
   def initialize_page
     wait_for_ajax

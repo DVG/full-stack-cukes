@@ -7,5 +7,9 @@ module Api
       respond_with Post.all
     end
 
+    def create
+      respond_with Post.create(params[:post])
+    end
+
   end
 end

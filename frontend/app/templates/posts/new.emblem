@@ -1,0 +1,8 @@
+form role="form" submit=submit
+  .form-group
+    label for="title" Title
+    =input type="text" class="form-control" id="post_title" value=title
+  .form-group
+    label for="body" Body
+    = input type="text" class="form-control" id="post_body" value=body
+  button#post_submit type="submit" class="btn btn-primary" Submit

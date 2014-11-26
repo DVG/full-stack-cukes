@@ -45,7 +45,7 @@ private
 
   def wait_for_processes_started
     begin
-      Timeout::timeout(15) do # Depending on your Project Size and how long booting your server takes, you may adjust this timeout
+      Timeout::timeout(Cukes.config.startup_timeout) do
         loop do
            break if processes_started?
         end

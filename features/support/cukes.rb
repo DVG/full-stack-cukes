@@ -8,6 +8,7 @@ class Cukes
     config.ember_root = File.join(config.root, "frontend")
     config.host = "http://localhost:4200"
     config.browser = ENV["BROWSER"] || :phantomjs
+    config.startup_timeout = 45
   end
 
 end

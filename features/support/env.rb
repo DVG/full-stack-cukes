@@ -1,5 +1,4 @@
 require 'factory_girl'
-require 'debugger'
 require 'active_record'
 require 'childprocess'
 require 'database_cleaner'

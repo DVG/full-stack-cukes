@@ -7,7 +7,6 @@ gem "activerecord"
 gem "activesupport"
 gem 'sqlite3'
 gem 'foreman'
-gem 'debugger'
 gem 'childprocess'
 gem 'database_cleaner'
 gem 'page-object'

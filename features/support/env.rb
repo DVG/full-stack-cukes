@@ -5,7 +5,7 @@ require 'database_cleaner'
 require 'active_support/dependencies'
 require 'page-object'
 require 'page-object/page_factory'
-require_relative './cukes'
+require_relative '../../config/cukes'
 require_relative './application_manager'
 
 # Require Models
